@@ -1,0 +1,58 @@
+studioVersion:
+  major: 5
+  minor: 14
+  patch: 0
+  build: 25091606
+  type: Public
+coreVersion: 328
+clientVersion: 13.580000
+updateCheckpoint: 75
+sceneId: 0a1ccb1a-fe88-4fbb-9883-e3af3c75fd99
+viewConfig:
+  simulation:
+    device: No Simulation
+    cameraFov: 66.519997
+    fullFrameAspect: nan
+    resolutionScale: 1.000000
+    viewport: Maximized
+    output: Live
+    stereoOutputEye: Center
+    deviceTypeOverride: Unknown
+    tint: true
+    screenshot: false
+    videoScreenRecord: false
+  cameraType: Front
+metaInfo:
+  hints:
+    []
+  tags:
+    []
+  lensName: Untitled
+  lensDescriptors:
+    []
+  lensApplicability:
+    - Front
+    - Back
+  lensClientCompatibilities:
+    - Mobile
+    - Web
+  platformBundlesEnabled: false
+  iconHash: ""
+  videoPreviewHash: ""
+  fromTemplateName: Default
+  fromTemplateUrl: Lens Studio 5.14.0.25091606
+  activationCamera: Front
+  sourceMapEnabled: false
+  usingMinClientVersions: false
+  androidMinClientVersion:
+    major: 0
+    minor: 0
+    patch: 0
+    build: 0
+  iOSMinClientVersion:
+    major: 0
+    minor: 0
+    patch: 0
+    build: 0
+  documentId: fde84cf5-a91d-4254-abf1-acccbda8ea78
+  originalDocumentId: f3d524c5-ac07-44a7-b03a-e07d591396ec

@@ -1,0 +1,131 @@
+- !<AssetCache>
+  AssetFiles:
+    {}
+  Assets:
+    []
+  SourceHash: 762d89bed2c80f57ee41c9c12c1ee6fe
+  FileHash: 9ccc66f294c10aa805a73874746fcb37
+  NativePackageItems:
+    - !<own> 61825513-cb92-d82a-8328-eb0930c2a506
+    - !<own> 0852ec9a-96f7-d41e-6a09-494257e040be
+    - !<own> ea989cf1-1ce3-04b2-536e-ee5420802b4d
+- !<ScriptComponent/0004fe67-eaba-4b9f-83cd-d0900d228790>
+  PrefabRemaps:
+    []
+  Name: Particlues
+  Enabled: true
+  ScriptAsset: !<reference> 02c6df83-e149-4e39-b1c4-3220a6aed782
+  ScriptInputsDefault:
+    {}
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      parent: !<reference.SceneObject> 43a57148-8398-4480-9fc2-92bbe597052e
+      Particles: !<reference.VFXComponent> 088122e1-7d5f-4c10-b87a-a2daf48da071
+  ScriptTypes:
+    "":
+      {}
+- !<AssetImportMetadata/0852ec9a-96f7-d41e-6a09-494257e040be>
+  ImportedAssetIds:
+    NativePackageDescriptor: !<reference> 431ebc33-d046-4dbd-b055-72e03cca77e0
+  ImporterName: NativePackageDescriptorImporter
+  PrimaryAsset: !<reference> 431ebc33-d046-4dbd-b055-72e03cca77e0
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    {}
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<ScriptAssetData/36ed1457-b804-4559-8e39-fba6b39526f3>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 4a50fdae-3535-4261-8548-d4a25942e33e
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    Particles: false
+    parent: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - parent: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      Particles: !<reference.VFXComponent> 00000000-0000-0000-0000-000000000000
+  ScriptTypes:
+    -
+      {}
+- !<ObjectPrefabAssetData/3c2af4f9-280f-4a4f-a439-f1955060f616>
+  SourceRemaps:
+    - 013e32d1-14dc-4ae5-baad-b1b83611c231: 0004fe67-eaba-4b9f-83cd-d0900d228790
+    - 23ff896b-dc39-4b84-b20c-482490492cf0: f857b3b3-4d91-4c52-8f9d-443a5305400d
+    - bf522682-2468-4b92-a493-c5b90c4b0219: 80be55e9-f3b9-4045-8178-3e82f5d69d3b
+  SourceState: !<own> 80be55e9-f3b9-4045-8178-3e82f5d69d3b
+- !<AssetImportMetadata/61825513-cb92-d82a-8328-eb0930c2a506>
+  ImportedAssetIds:
+    JavaScriptAsset: !<reference> 02c6df83-e149-4e39-b1c4-3220a6aed782
+  ImporterName: JavaScriptAssetImporter
+  PrimaryAsset: !<reference> 02c6df83-e149-4e39-b1c4-3220a6aed782
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    JavaScriptAsset: !<own> 36ed1457-b804-4559-8e39-fba6b39526f3
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<ObjectPrefab/80be55e9-f3b9-4045-8178-3e82f5d69d3b>
+  PackagePath: ""
+  objects:
+    - !<own> f857b3b3-4d91-4c52-8f9d-443a5305400d
+  LazyLoading: false
+  RetainAssets: true
+- !<AssetImportMetadata/ea989cf1-1ce3-04b2-536e-ee5420802b4d>
+  ImportedAssetIds:
+    ObjectPrefab: !<reference> bf522682-2468-4b92-a493-c5b90c4b0219
+  ImporterName: ObjectPrefabImporter
+  PrimaryAsset: !<reference> bf522682-2468-4b92-a493-c5b90c4b0219
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    ObjectPrefab: !<own> 3c2af4f9-280f-4a4f-a439-f1955060f616
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<SceneObject/f857b3b3-4d91-4c52-8f9d-443a5305400d>
+  PrefabRemaps:
+    []
+  Name: Particles
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 0004fe67-eaba-4b9f-83cd-d0900d228790

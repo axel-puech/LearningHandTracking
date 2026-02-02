@@ -1,0 +1,118 @@
+//@input SceneObject parent
+//@ui {"widget":"label", "label":"Tracking hand: 1 - Right, 2 - Left"}
+//@input Component.ObjectTracking3D[] handTrackingRightLeft
+//@ui {"widget":"label", "label":"Tracking hand: 1 - Right, 2 - Left"}
+
+//@input SceneObject[] meshParentRightLeft
+
+// premmierement identifier si les mains sont detectees
+// cette scene va prendre les tracking des deux mains
+// track la position des mains et applique cette position aux parents des meshes des mains
+// cette scene va prendre aussi en input le parent des meshes des mains et des particles
+
+// index 0 = main droite
+// index 1 = main gauche
+
+//_________________________Director Setup_________________________//
+script.subScene = new global.SubScene(script, script.parent);
+script.subScene.OnStart = Start;
+script.subScene.OnLateStart = OnLateStart;
+script.subScene.OnStop = Stop;
+script.subScene.SetUpdate(Update);
+
+//__________________________Variables_____________________________//
+
+// By default: no hand is detected
+var RightHandDetected = false;
+var LeftHandDetected = false;
+
+//________Caller________//
+// 0 = undetected, 1 = detected
+const RightHandCaller = script.subScene.CreateCaller("RightHandEvent", 0);
+const LeftHandCaller = script.subScene.CreateCaller("LeftHandEvent", 0);
+
+//_________________________Director functions_____________________//
+
+function Start() {
+  print("TrackHand Subscene started");
+}
+function OnLateStart() {
+  // Disable mesh parent Right
+  script.meshParentRightLeft[0].enabled = false;
+  // Disable mesh parent Left
+  script.meshParentRightLeft[1].enabled = false;
+}
+
+function Update() {
+  // Check each hand tracker
+  script.handTrackingRightLeft.forEach((handTracker, index) => {
+    // If hand is tracking
+    if (handTracker.isTracking()) {
+      // If right hand and not yet detected
+      if (index === 0) {
+        if (!RightHandDetected) {
+          console.log("Right Hand Detected");
+          RightHandDetected = true;
+          script.meshParentRightLeft[0].enabled = true;
+          RightHandCaller.Call(1);
+        }
+        var rightHandTransform = handTracker.getTransform();
+        var rightHandPos = rightHandTransform.getWorldPosition();
+        var rightHandRot = rightHandTransform.getWorldRotation();
+        script.meshParentRightLeft[0]
+          .getTransform()
+          .setWorldPosition(rightHandPos);
+        script.meshParentRightLeft[0]
+          .getTransform()
+          .setWorldRotation(rightHandRot);
+      }
+      // If left hand and not yet detected
+      else if (index === 1) {
+        if (!LeftHandDetected) {
+          console.log("Left Hand Detected");
+          LeftHandDetected = true;
+          script.meshParentRightLeft[1].enabled = true;
+          LeftHandCaller.Call(1);
+        }
+        var leftHandTransform = handTracker.getTransform();
+
+        var leftHandPos = leftHandTransform.getWorldPosition();
+        var leftHandRot = leftHandTransform.getWorldRotation();
+        script.meshParentRightLeft[1]
+          .getTransform()
+          .setWorldPosition(leftHandPos);
+        script.meshParentRightLeft[1]
+          .getTransform()
+          .setWorldRotation(leftHandRot);
+      }
+    }
+    // If hand is not tracking
+    else {
+      // If right hand was detected
+      if (index === 0 && RightHandDetected) {
+        console.log("Right Hand Lost");
+        RightHandDetected = false;
+        RightHandCaller.Call(0);
+        script.meshParentRightLeft[0].enabled = false;
+      }
+      // If left hand was detected
+      else if (index === 1 && LeftHandDetected) {
+        console.log("Left Hand Lost");
+        LeftHandDetected = false;
+        LeftHandCaller.Call(0);
+        script.meshParentRightLeft[1].enabled = false;
+      }
+    }
+  });
+}
+
+function Stop() {
+  RightHandDetected = false;
+  LeftHandDetected = false;
+  // Disable mesh parent Right
+  script.meshParentRightLeft[0].enabled = false;
+  // Disable mesh parent Left
+  script.meshParentRightLeft[1].enabled = false;
+}
+
+//___________________________Functions__________________________//

@@ -1,0 +1,51 @@
+- !<AssetImportMetadata/bcafad2c-87b0-4cde-a7e0-204c3d3bc738>
+  ImportedAssetIds:
+    ObjectPrefab: !<reference> bf522682-2468-4b92-a493-c5b90c4b0219
+  ImporterName: ObjectPrefabImporter
+  PrimaryAsset: !<reference> bf522682-2468-4b92-a493-c5b90c4b0219
+  PackageType: NotAPackage
+  PackagePolicy: CannotBeUnpacked
+  ExtraData: {}
+  AssetDataMap:
+    ObjectPrefab: !<own> 3c2af4f9-280f-4a4f-a439-f1955060f616
+  DependentFiles: []
+  ImporterSettings: !<AssetImporterSettings> {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<ScriptComponent/0004fe67-eaba-4b9f-83cd-d0900d228790>
+  PrefabRemaps: []
+  Name: Particlues
+  Enabled: true
+  ScriptAsset: !<reference> 02c6df83-e149-4e39-b1c4-3220a6aed782
+  ScriptInputsDefault: {}
+  ScriptTypesDefault: {}
+  ScriptInputs:
+    "":
+      parent: !<reference.SceneObject> 43a57148-8398-4480-9fc2-92bbe597052e
+      Particles: !<reference.VFXComponent> 088122e1-7d5f-4c10-b87a-a2daf48da071
+  ScriptTypes:
+    "": {}
+- !<ObjectPrefabAssetData/3c2af4f9-280f-4a4f-a439-f1955060f616>
+  SourceRemaps:
+    - 013e32d1-14dc-4ae5-baad-b1b83611c231: 0004fe67-eaba-4b9f-83cd-d0900d228790
+    - 23ff896b-dc39-4b84-b20c-482490492cf0: f857b3b3-4d91-4c52-8f9d-443a5305400d
+    - bf522682-2468-4b92-a493-c5b90c4b0219: 80be55e9-f3b9-4045-8178-3e82f5d69d3b
+  SourceState: !<own> 80be55e9-f3b9-4045-8178-3e82f5d69d3b
+- !<ObjectPrefab/80be55e9-f3b9-4045-8178-3e82f5d69d3b>
+  PackagePath: ""
+  objects:
+    - !<own> f857b3b3-4d91-4c52-8f9d-443a5305400d
+  LazyLoading: false
+  RetainAssets: true
+- !<SceneObject/f857b3b3-4d91-4c52-8f9d-443a5305400d>
+  PrefabRemaps: []
+  Name: Particles
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children: []
+  Components:
+    - !<own> 0004fe67-eaba-4b9f-83cd-d0900d228790

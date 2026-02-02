@@ -1,0 +1,13 @@
+- !<AssetCache>
+  AssetFiles:
+    8adb1310-63f7-43bf-aa35-dc0877452ee5: 69bd9279-c86d-818a-eee8-d3481b3f0471/df970fdddac3b60ea4da7881ae9ed444/Data/AdobeStock_1615319770 2.png
+  Assets:
+    - !<FileTexture/8adb1310-63f7-43bf-aa35-dc0877452ee5>
+      PackagePath: ""
+      FileInfo: !<FileTextureInfo>
+        Width: 1380
+        Height: 1152
+  SourceHash: df970fdddac3b60ea4da7881ae9ed444
+  FileHash: f63d0d565d9056e4132d21f246512bf0
+  NativePackageItems:
+    []

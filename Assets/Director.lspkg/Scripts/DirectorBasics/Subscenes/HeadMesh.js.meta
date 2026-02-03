@@ -1,20 +1,20 @@
-- !<AssetImportMetadata/bee123c9-e508-490c-82b9-0e528060f587>
+- !<AssetImportMetadata/c787d9ac-b5a4-4efa-b94d-c2934e98962e>
   ImportedAssetIds:
-    JavaScriptAsset: !<reference> ea9f9363-2836-4e1f-a79f-8d9a35c013a7
+    JavaScriptAsset: !<reference> 396e804f-57ff-4709-8b57-62d033cff252
   ImporterName: JavaScriptAssetImporter
-  PrimaryAsset: !<reference> ea9f9363-2836-4e1f-a79f-8d9a35c013a7
+  PrimaryAsset: !<reference> 396e804f-57ff-4709-8b57-62d033cff252
   PackageType: NotAPackage
   LegacyPackagePolicy: ~
   ExtraData:
     {}
   AssetDataMap:
-    JavaScriptAsset: !<own> 210b932e-5cca-4c04-b91c-78cf49423c16
+    JavaScriptAsset: !<own> 1d2f9b73-6b53-49ab-aceb-cdf372e0df5d
   DependentFiles:
     []
   ImporterSettings: !<AssetImporterSettings>
     {}
   CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
-- !<ScriptAssetData/210b932e-5cca-4c04-b91c-78cf49423c16>
+- !<ScriptAssetData/1d2f9b73-6b53-49ab-aceb-cdf372e0df5d>
   SvgIcon: ""
   SetupScript:
     code: ""
@@ -22,14 +22,12 @@
   VersionMajor: 0
   VersionMinor: 0
   VersionPatch: 0
-  ComponentUid: 2e8cffe1-c498-4d58-9edf-b1db062a9167
+  ComponentUid: ed88591d-d537-4838-bc81-02a9e119be3f
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
-    cam: false
-    handTracking: false
-    imageObject: false
-    minimumDistance: false
+    fadeDuration: false
+    headMaterial: false
     parent: false
   ScriptTypesHidden:
     {}
@@ -41,12 +39,8 @@
     []
   DefaultScriptInputs:
     - parent: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
-      imageObject: !<reference.SceneObject[]>
-        []
-      handTracking: !<reference.ObjectTracking3D[]>
-        []
-      cam: !<reference.Camera> 00000000-0000-0000-0000-000000000000
-      minimumDistance: 0.200000
+      headMaterial: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      fadeDuration: !<float> 2.000000
   ScriptTypes:
     -
       {}

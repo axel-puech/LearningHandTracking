@@ -1,8 +1,8 @@
-- !<AssetImportMetadata/1f510319-a744-4a3a-b433-342ce0f0a00f>
+- !<AssetImportMetadata/a3c41149-3863-4739-8a33-ba0f31eca984>
   ImportedAssetIds:
-    ShaderGraph: !<reference> 992cf14a-c81a-4c43-9e7d-9f91667f0764
-  ImporterName: ShaderGraphPassImporter
-  PrimaryAsset: !<reference> 992cf14a-c81a-4c43-9e7d-9f91667f0764
+    FaceMesh: !<reference> d1a74fb3-1a6a-40b7-848b-f6bdacb0aff0
+  ImporterName: FaceMeshImporter
+  PrimaryAsset: !<reference> d1a74fb3-1a6a-40b7-848b-f6bdacb0aff0
   PackageType: NotAPackage
   LegacyPackagePolicy: ~
   ExtraData:

@@ -1,13 +1,17 @@
 //@input SceneObject parent
+//@ui {"widget":"separator"}
 //@ui {"widget":"label", "label":"Tracking hand: 1 - Right, 2 - Left"}
-//@input Component.ObjectTracking3D[] handTrackingRightLeft
+//@input Component.ObjectTracking3D[] handTracking
+//@ui {"widget":"separator"}
 //@ui {"widget":"label", "label":"Parent of the Mesh: 1 - Right, 2 - Left"}
-//@input SceneObject[] meshParentRightLeft
-
-// premmierement identifier si les mains sont detectees
-// cette scene va prendre les tracking des deux mains
-// track la position des mains et applique cette position aux parents des meshes des mains
-// cette scene va prendre aussi en input le parent des meshes des mains et des particles
+//@input SceneObject[] meshParent
+//@ui {"widget":"separator"}
+//@input float lerpSpeedMovement = 0.4
+//@input float lerpSpeedRotation = 0.4
+//@input float scaleDuration = 1
+//@ui {"widget":"separator"}
+//@ui {"widget":"label", "label":"Parent of the Head Position: 1 - Top, 2 - Bot"}
+//@input SceneObject[] headParentPositions
 
 // index 0 = main droite
 // index 1 = main gauche
@@ -25,26 +29,57 @@ script.subScene.SetUpdate(Update);
 var RightHandDetected = false;
 var LeftHandDetected = false;
 
+var rightTargetReached = false;
+var leftTargetReached = false;
+
 //________Caller________//
 // 0 = undetected, 1 = detected
+const enableDetectionCaller = script.subScene.CreateCaller(
+  "EnableDetectionEvent",
+  0,
+);
 const RightHandCaller = script.subScene.CreateCaller("RightHandEvent", 0);
 const LeftHandCaller = script.subScene.CreateCaller("LeftHandEvent", 0);
 
+//________Listener________//
+const targetReachedListener = script.subScene.CreateListener(
+  "targetReachedEvent",
+  OnTargetReached,
+);
+
+//__________________________Animations____________________________//
+
+var meshToAnimate = null;
+// SCALE ANIMATION
+var scaleAnim = new global.Animation(
+  script.parent,
+  script.scaleDuration,
+  ScaleAnimUpdate,
+);
+scaleAnim.Easing = BounceOut;
+function ScaleAnimUpdate(ratio) {
+  var scaleValue = ratio;
+  var transform = meshToAnimate.getTransform();
+  transform.setLocalScale(new vec3(scaleValue, scaleValue, scaleValue));
+}
+
+scaleAnim.AddTimeCodeEvent(1, function () {
+  enableDetectionCaller.Call(1);
+});
+
 //_________________________Director functions_____________________//
 
-function Start() {
-  print("TrackHand Subscene started");
-}
+function Start() {}
 function OnLateStart() {
   // Disable mesh parent Right
-  script.meshParentRightLeft[0].enabled = false;
+  script.meshParent[0].enabled = false;
   // Disable mesh parent Left
-  script.meshParentRightLeft[1].enabled = false;
+  script.meshParent[1].enabled = false;
 }
 
 function Update() {
   // Check each hand tracker
-  script.handTrackingRightLeft.forEach((handTracker, index) => {
+  script.handTracking.forEach((handTracker, index) => {
     // If hand is tracking
     if (handTracker.isTracking()) {
       // If right hand and not yet detected
@@ -52,54 +87,77 @@ function Update() {
         if (!RightHandDetected) {
           console.log("Right Hand Detected");
           RightHandDetected = true;
-          script.meshParentRightLeft[0].enabled = true;
+
+          // First set position and rotation without lerp
+          script.meshParent[0].enabled = true;
+          setPositionAndRotation(handTracker, script.meshParent[index]);
+          meshToAnimate = script.meshParent[0];
+          scaleAnim.Start();
           RightHandCaller.Call(1);
         }
-        var rightHandTransform = handTracker.getTransform();
-        var rightHandPos = rightHandTransform.getWorldPosition();
-        var rightHandRot = rightHandTransform.getWorldRotation();
-        script.meshParentRightLeft[0]
-          .getTransform()
-          .setWorldPosition(rightHandPos);
-        script.meshParentRightLeft[0]
-          .getTransform()
-          .setWorldRotation(rightHandRot);
+
+        // while right target not reached -> follow hand
+        if (!rightTargetReached) {
+          lerpPositionAndRotation(handTracker, script.meshParent[0]);
+        } else {
+          lerpPositionAndRotation(
+            script.headParentPositions[0],
+            script.meshParent[0],
+          );
+        }
       }
       // If left hand and not yet detected
       else if (index === 1) {
         if (!LeftHandDetected) {
           console.log("Left Hand Detected");
           LeftHandDetected = true;
-          script.meshParentRightLeft[1].enabled = true;
+
+          // First set position and rotation without lerp
+          script.meshParent[1].enabled = true;
+          setPositionAndRotation(handTracker, script.meshParent[index]);
+          meshToAnimate = script.meshParent[1];
+          scaleAnim.Start();
           LeftHandCaller.Call(1);
         }
-        var leftHandTransform = handTracker.getTransform();
-
-        var leftHandPos = leftHandTransform.getWorldPosition();
-        var leftHandRot = leftHandTransform.getWorldRotation();
-        script.meshParentRightLeft[1]
-          .getTransform()
-          .setWorldPosition(leftHandPos);
-        script.meshParentRightLeft[1]
-          .getTransform()
-          .setWorldRotation(leftHandRot);
+        if (!leftTargetReached) {
+          lerpPositionAndRotation(handTracker, script.meshParent[1]);
+        } else {
+          lerpPositionAndRotation(
+            script.headParentPositions[1],
+            script.meshParent[1],
+          );
+        }
       }
     }
     // If hand is not tracking
     else {
       // If right hand was detected
       if (index === 0 && RightHandDetected) {
+        if (!rightTargetReached) {
+          RightHandDetected = false;
+          RightHandCaller.Call(0);
+          script.meshParent[0].enabled = false;
+        } else {
+          lerpPositionAndRotation(
+            script.headParentPositions[0],
+            script.meshParent[0],
+          );
+        }
         console.log("Right Hand Lost");
-        RightHandDetected = false;
-        RightHandCaller.Call(0);
-        script.meshParentRightLeft[0].enabled = false;
       }
       // If left hand was detected
       else if (index === 1 && LeftHandDetected) {
         console.log("Left Hand Lost");
-        LeftHandDetected = false;
-        LeftHandCaller.Call(0);
-        script.meshParentRightLeft[1].enabled = false;
+        if (!leftTargetReached) {
+          LeftHandDetected = false;
+          LeftHandCaller.Call(0);
+          script.meshParent[1].enabled = false;
+        } else {
+          lerpPositionAndRotation(
+            script.headParentPositions[1],
+            script.meshParent[1],
+          );
+        }
       }
     }
   });
@@ -108,10 +166,49 @@ function Update() {
 function Stop() {
   RightHandDetected = false;
   LeftHandDetected = false;
+
   // Disable mesh parent Right
-  script.meshParentRightLeft[0].enabled = false;
+  script.meshParent[0].enabled = false;
   // Disable mesh parent Left
-  script.meshParentRightLeft[1].enabled = false;
+  script.meshParent[1].enabled = false;
+
+  rightTargetReached = false;
+  leftTargetReached = false;
 }
 
 //___________________________Functions__________________________//
+
+function lerpPositionAndRotation(handTracker, meshParent) {
+  var handTransform = handTracker.getTransform();
+
+  // LERP POSITION
+  var handPos = handTransform.getWorldPosition();
+  var currentPos = meshParent.getTransform().getWorldPosition();
+  var lerpPos = vec3.lerp(currentPos, handPos, script.lerpSpeedMovement);
+  meshParent.getTransform().setWorldPosition(lerpPos);
+
+  // LERP ROTATION
+  var handRot = handTransform.getWorldRotation();
+  var currentRot = meshParent.getTransform().getWorldRotation();
+  var lerpRot = quat.slerp(currentRot, handRot, script.lerpSpeedRotation);
+  meshParent.getTransform().setWorldRotation(lerpRot);
+}
+
+function setPositionAndRotation(handTracker, meshParent) {
+  var handTransform = handTracker.getTransform();
+  // SET POSITION
+  var handPos = handTransform.getWorldPosition();
+  meshParent.getTransform().setWorldPosition(handPos);
+  // SET ROTATION
+  var handRot = handTransform.getWorldRotation();
+  meshParent.getTransform().setWorldRotation(handRot);
+}
+
+function OnTargetReached(value) {
+  // value 0 = right, 1 = left
+  if (value === 0) {
+    rightTargetReached = true;
+  } else if (value === 1) {
+    leftTargetReached = true;
+  }
+}

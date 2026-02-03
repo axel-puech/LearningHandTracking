@@ -1,12 +1,13 @@
 //@input SceneObject parent
+//@ui {"widget":"separator"}
 //@ui {"widget":"label", "label":"Fire Aura: 1 - Right, 2 - Left"}
 //@input SceneObject[] imageObject
+//@ui {"widget":"separator"}
 //@ui {"widget":"label", "label":"Hand Tracking: 1 - Right, 2 - Left"}
-//@input Component.ObjectTracking3D[] handTrackingRightLeft
+//@input Component.ObjectTracking3D[] handTracking
+//@ui {"widget":"separator"}
 //@input Component.Camera cam
-// prend chaque screen Image
-// prend chaque position des mains
-// calcule que si la main est active ( cf event hand detected )
+//@input float minimumDistance = 0.2
 
 //_________________________Director Setup_________________________//
 script.subScene = new global.SubScene(script, script.parent);
@@ -23,6 +24,8 @@ var LeftHandDetected = false;
 var targetPosRight = new vec2(0.15, 0.15);
 var targetPosLeft = new vec2(0.85, 0.85);
 
+var enableDetection = false;
+
 //________Listener________//
 var RightHandListener = script.subScene.CreateListener(
   "RightHandEvent",
@@ -32,10 +35,17 @@ var LeftHandListener = script.subScene.CreateListener(
   "LeftHandEvent",
   ToggleLeft,
 );
+const enableDetectionListener = script.subScene.CreateListener(
+  "EnableDetectionEvent",
+  ToggleEnableDetection,
+);
 
-// creation des caller -> quand la main est proche de la cible
-// const contactRight = script.subScene.CreateCaller("RightHandEvent", 0);
-// const LeftHandCaller = script.subScene.CreateCaller("LeftHandEvent", 0);
+//________Caller________//
+// 0 = right, 1 = left
+const targetReachedCaller = script.subScene.CreateCaller(
+  "targetReachedEvent",
+  0,
+);
 
 //_________________________Director functions_____________________//
 
@@ -43,28 +53,29 @@ function Start() {}
 function OnLateStart() {}
 
 function Update() {
-  if (RightHandDetected) {
-    var handPosScreenRight = returnHandPosition(
-      script.handTrackingRightLeft[0],
-    );
+  if (RightHandDetected && enableDetection) {
+    var handPosScreenRight = returnHandPosition(script.handTracking[0]);
     var distance = handPosScreenRight.distance(targetPosRight);
-    if (distance < 0.2) {
-      print("Distance to target Right: " + distance);
+    if (distance < script.minimumDistance) {
+      targetReachedCaller.Call(0);
     }
-
-    // screenPosRight.distance();
   }
 
-  if (LeftHandDetected) {
-    var handPosScreenLeft = returnHandPosition(script.handTrackingRightLeft[1]);
+  if (LeftHandDetected && enableDetection) {
+    var handPosScreenLeft = returnHandPosition(script.handTracking[1]);
     var distance = handPosScreenLeft.distance(targetPosLeft);
-    if (distance < 0.2) {
-      print("Distance to target Left: " + distance);
+    if (distance < script.minimumDistance) {
+      targetReachedCaller.Call(1);
     }
   }
 }
 
-function Stop() {}
+function Stop() {
+  RightHandDetected = false;
+  LeftHandDetected = false;
+
+  enableDetection = false;
+}
 
 //___________________________Functions__________________________//
 
@@ -89,4 +100,14 @@ function returnHandPosition(handTracking) {
   var handPos = handTrackingTr.getWorldPosition();
   var screenPos = script.cam.worldSpaceToScreenSpace(handPos);
   return screenPos;
+}
+
+function ToggleEnableDetection(value) {
+  if (value === 1) {
+    print("Enable hand detection");
+    enableDetection = true;
+  } else {
+    print("Disable hand detection");
+    enableDetection = false;
+  }
 }

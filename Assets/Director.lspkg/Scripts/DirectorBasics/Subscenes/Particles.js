@@ -1,6 +1,7 @@
 //@input SceneObject parent
+//@ui {"widget":"separator"}
 //@ui {"widget":"label", "label":"Particles: 1 - Right, 2 - Left"}
-//@input Component.VFXComponent[] ParticlesRightLeft
+//@input Component.VFXComponent[] Particles
 
 //_________________________Director Setup_________________________//
 script.subScene = new global.SubScene(script, script.parent);
@@ -34,25 +35,28 @@ var LeftHandListener = script.subScene.CreateListener(
 function Start() {}
 function OnLateStart() {
   // Deactivate all particles at start
-  script.ParticlesRightLeft[0].asset.properties["killParticles"] = 1;
-  script.ParticlesRightLeft[1].asset.properties["killParticles"] = 1;
+  script.Particles[0].asset.properties["killParticles"] = 1;
+  script.Particles[1].asset.properties["killParticles"] = 1;
 }
 
 function Update() {}
 
-function Stop() {}
+function Stop() {
+  activateParticlesRight = false;
+  activateParticlesLeft = false;
+}
 
 //___________________________Functions__________________________//
 
 function ToggleParticlesRight(value) {
   if (value === 1 && !activateParticlesRight) {
     activateParticlesRight = true;
-    script.ParticlesRightLeft[0].asset.properties["killParticles"] = 0;
+    script.Particles[0].asset.properties["killParticles"] = 0;
 
     print("Activate Right Particles");
   } else if (value === 0 && activateParticlesRight) {
     activateParticlesRight = false;
-    script.ParticlesRightLeft[0].asset.properties["killParticles"] = 1;
+    script.Particles[0].asset.properties["killParticles"] = 1;
     print("Deactivate Right Particles");
   }
 }
@@ -60,11 +64,11 @@ function ToggleParticlesRight(value) {
 function ToggleParticlesLeft(value) {
   if (value === 1 && !activateParticlesLeft) {
     activateParticlesLeft = true;
-    script.ParticlesRightLeft[1].asset.properties["killParticles"] = 0;
+    script.Particles[1].asset.properties["killParticles"] = 0;
     print("Activate Left Particles");
   } else if (value === 0 && activateParticlesLeft) {
     activateParticlesLeft = false;
-    script.ParticlesRightLeft[1].asset.properties["killParticles"] = 1;
+    script.Particles[1].asset.properties["killParticles"] = 1;
     print("Deactivate Left Particles");
   }
 }

@@ -26,9 +26,13 @@
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
-    handTrackingRightLeft: false
-    meshParentRightLeft: false
+    handTracking: false
+    headParentPositions: false
+    lerpSpeedMovement: false
+    lerpSpeedRotation: false
+    meshParent: false
     parent: false
+    scaleDuration: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -39,9 +43,14 @@
     []
   DefaultScriptInputs:
     - parent: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
-      handTrackingRightLeft: !<reference.ObjectTracking3D[]>
+      handTracking: !<reference.ObjectTracking3D[]>
         []
-      meshParentRightLeft: !<reference.SceneObject[]>
+      meshParent: !<reference.SceneObject[]>
+        []
+      lerpSpeedMovement: 0.400000
+      lerpSpeedRotation: 0.400000
+      scaleDuration: !<float> 2.000000
+      headParentPositions: !<reference.SceneObject[]>
         []
   ScriptTypes:
     -

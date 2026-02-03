@@ -1,8 +1,8 @@
-- !<AssetImportMetadata/d2e459a8-1a91-70e0-b93d-6c58f962992f>
+- !<AssetImportMetadata/da6961b5-d895-41ca-9e68-00f7565dd125>
   ImportedAssetIds:
-    Material: !<reference> 9477aaae-9e36-4cc3-96ba-70d1bc811215
-  ImporterName: MaterialImporter
-  PrimaryAsset: !<reference> 9477aaae-9e36-4cc3-96ba-70d1bc811215
+    FaceTrackingScope: !<reference> 4e10c552-17aa-47c5-a3e5-89d23906f6d8
+  ImporterName: FaceTrackingScopeImporter
+  PrimaryAsset: !<reference> 4e10c552-17aa-47c5-a3e5-89d23906f6d8
   PackageType: NotAPackage
   LegacyPackagePolicy: ~
   ExtraData:

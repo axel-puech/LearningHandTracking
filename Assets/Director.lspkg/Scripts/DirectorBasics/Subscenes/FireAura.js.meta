@@ -29,6 +29,7 @@
     imageObject: false
     parent: false
     scaleDuration: false
+    speedRotation: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -42,6 +43,7 @@
       imageObject: !<reference.SceneObject[]>
         []
       scaleDuration: !<float> 2.000000
+      speedRotation: !<float> 1.000000
   ScriptTypes:
     -
       {}
